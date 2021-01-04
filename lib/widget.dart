@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:social_media_app/data.dart';
 import 'package:social_media_app/screen/home.dart';
 import 'package:social_media_app/screen/login.dart';
+import 'package:social_media_app/screen/profile.dart';
 
 class CurveClipper extends CustomClipper<Path> {
   @override
@@ -124,7 +125,18 @@ class CustomDrawer extends StatelessWidget {
           ),
           _drawOption(Icon(Icons.chat), "Chat", () {}),
           _drawOption(Icon(Icons.location_on), "Map", () {}),
-          _drawOption(Icon(Icons.account_circle), "Your Profile", () {}),
+          _drawOption(
+            Icon(Icons.account_circle),
+            "Your Profile",
+            () => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) => ProfileScreen(
+                  user: currentUser,
+                ),
+              ),
+            ),
+          ),
           _drawOption(Icon(Icons.settings), "Setting", () {}),
           Expanded(
             child: Align(
@@ -145,4 +157,28 @@ class CustomDrawer extends StatelessWidget {
       ),
     );
   }
+}
+
+class ProfileClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(0, size.height * 4 / 5);
+    final curvePoint = Offset(size.width / 2, size.height);
+
+    final endPoint = Offset(size.width, size.height * 4 / 5);
+    path.quadraticBezierTo(
+      curvePoint.dx,
+      curvePoint.dy,
+      endPoint.dx,
+      endPoint.dy,
+    );
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+    throw UnimplementedError();
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }
