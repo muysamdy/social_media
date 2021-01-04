@@ -1,3 +1,8 @@
+import 'package:flutter/foundation.dart';
+
+/// Immutable Post data class.
+
+@immutable
 class Post {
   Post({
     this.imageUrl,
@@ -37,6 +42,23 @@ class Post {
       like.hashCode ^
       comment.hashCode;
 
+  Post copyWith({
+    String imageUrl,
+    User author,
+    String title,
+    String location,
+    int like,
+    int comment,
+  }) =>
+      Post(
+        imageUrl: imageUrl ?? this.imageUrl,
+        author: author ?? this.author,
+        title: title ?? this.title,
+        location: location ?? this.location,
+        like: like ?? this.like,
+        comment: comment ?? this.comment,
+      );
+
   @override
   String toString() => "Post{"
       "imageUrl: $imageUrl"
@@ -47,6 +69,7 @@ class Post {
       "comment: $comment";
 }
 
+// Immutable User data class.
 class User {
   User({
     this.profileImageUrl,
@@ -89,6 +112,25 @@ class User {
       following.hashCode ^
       posts.hashCode ^
       favorites.hashCode;
+
+  User copyWith({
+    String profileImageUrl,
+    String backgroundImageUrl,
+    String name,
+    int following,
+    int follower,
+    List<Post> posts = const <Post>[],
+    List<Post> favorites = const <Post>[],
+  }) =>
+      User(
+        profileImageUrl: profileImageUrl ?? this.profileImageUrl,
+        backgroundImageUrl: backgroundImageUrl ?? this.backgroundImageUrl,
+        name: name ?? this.name,
+        following: following ?? this.following,
+        follower: follower ?? this.follower,
+        posts: posts ?? this.posts,
+        favorites: favorites ?? this.favorites,
+      );
 
   @override
   String toString() => "User{"
